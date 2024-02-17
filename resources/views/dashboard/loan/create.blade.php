@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <h2 class="text-xl font-semibold leading-tight">
-                {{ __('Loans Create') }}
+                {{ __('Pembuatan Pinjaman') }}
             </h2>
         </div>
     </x-slot>
@@ -14,16 +14,14 @@
                     <form action="{{ route('loans.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="w-full my-1">
-                            <x-form.label class="font-semibold text-lg " value="User Name" for="user_id" />
+                            <x-form.label class="font-semibold text-lg " value="Nama Pengguna" for="user_id" />
                             <x-form.select name="user_id" id="user_id">
                                 <option>
-                                    {{ __('Select Category') }}
+                                    {{ __('Pilih Kategori') }}
                                 </option>
-                                    @foreach($users as $user)
-                                        <option value="{{ $user->id }}" @if($user->id === $user->id) selected @endif>
-                                            {{ $user->name }}
-                                        </option>
-                                    @endforeach
+                                <option value="{{ auth()->user()->id }}" selected>
+                                    {{ auth()->user()->name }}
+                                </option>
                                 <div class="mt-2">
                                     @error('user_id')
                                         <x-form.error :messages="$message" />
@@ -32,16 +30,9 @@
                             </x-form.select>
                         </div>
                         <div class="w-full my-1">
-                            <x-form.label class="font-semibold text-lg " value="Book" for="book_id" />
+                            <x-form.label class="font-semibold text-lg " value="Buku" for="book_id" />
                             <x-form.select name="book_id" id="book_id">
-                                <option>
-                                    {{ __('Select Category') }}
-                                </option>
-                                @foreach ($books as $book)
-                                    <option value="{{ $book->id }}" @selected(!empty($book) && $book->id == $book->book_id)>
-                                        {{ $book->title }}
-                                    </option>
-                                @endforeach
+                                <option value="{{ $book->id }}">{{ $book->title }}</option>
                                 <div class="mt-2">
                                     @error('book_id')
                                         <x-form.error :messages="$message" />
@@ -49,13 +40,17 @@
                                 </div>
                             </x-form.select>
                         </div>
+                        <div class="w-full my-1">
+                            <x-form.label class="font-semibold text-lg" value="Stock" for="book_id" />
+                           <x-form.input ></x-form.input>
+                        </div>
                         <div class="flex gap-2 mt-5">
-                                <x-primary-button>
-                                    Save Changes
-                                </x-primary-button>
+                            <x-primary-button>
+                                Simpan
+                            </x-primary-button>
                             <a href="{{ route('loans.index') }}">
                                 <x-danger-button type="button">
-                                    Back
+                                    Kembali
                                 </x-danger-button>
                             </a>
                         </div>

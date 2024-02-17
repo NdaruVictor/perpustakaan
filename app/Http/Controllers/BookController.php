@@ -15,6 +15,7 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::all();
+        // dd($books);
         return view('dashboard.book.index', compact('books'));
     }
 
@@ -32,13 +33,11 @@ class BookController extends Controller
      */
     public function store(Request $request,)
     {
-        $book = Book::all();
-        dd($request->title);
         //validate form
         $this->validate($request, [
-            'book_code' => 'required|unique:books,book_code,' . $book->id,
             'title' => 'required|max:225',
             'author' => 'required',
+            'description' => 'required',
             'publish_date' => 'nullable',
             'stock' => 'integer',
             'image' => 'required|image|mimes:jpeg,jpg,png|max:2048',
@@ -47,10 +46,11 @@ class BookController extends Controller
         //upload image
         $image = $request->file('image');
         $image->storeAs('public/book/', $image->hashName());
+
         //create post
         Book::create([
-            'book_code' => $request->book_code,
             'title' => $request->title,
+            'description' => $request->description,
             'author' => $request->author,
             'publish_date' => $request->publish_date,
             'stock' => $request->stock,
@@ -87,9 +87,9 @@ class BookController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'book_code' => 'required|unique:books,book_code,' . $book->id,
             'title' => 'required|max:225',
             'author' => 'required',
+            'description' => 'required',
             'publish_date' => 'nullable',
             'stock' => 'nullable',
             'image' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
@@ -105,9 +105,9 @@ class BookController extends Controller
             Storage::delete('public/book/', $book->image);
 
             $book->update([
-                'book_code' => $request->book_code,
                 'title' => $request->title,
                 'author' => $request->author,
+                'description' => $request->description,
                 'publish_date' => $request->publish_date,
                 'stock' => $request->stock,
                 'image' => $image->hashName(),
@@ -116,9 +116,9 @@ class BookController extends Controller
           }else {
 
             $book->update([
-                'book_code' => $request->book_code,
                 'title' => $request->title,
                 'author' => $request->author,
+                'description' => $request->description,
                 'publish_date' => $request->publish_date,
                 'stock' => $request->stock,
                 'book_category_id' => $request->book_category_id,

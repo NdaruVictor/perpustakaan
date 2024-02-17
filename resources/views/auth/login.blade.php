@@ -1,16 +1,16 @@
 <x-guest-layout>
     <x-auth-card>
-        <!-- Session Status -->
+        <!-- Status Sesi -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
-        <!-- Validation Errors -->
+        <!-- Validasi Error -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
             <div class="grid gap-6">
-                <!-- Email Address -->
+                <!-- Alamat Email -->
                 <div class="space-y-2">
                     <x-form.label
                         for="email"
@@ -36,7 +36,7 @@
                     </x-form.input-with-icon-wrapper>
                 </div>
 
-                <!-- Password -->
+                <!-- Kata Sandi -->
                 <div class="space-y-2">
                     <x-form.label
                         for="password"
@@ -61,7 +61,7 @@
                     </x-form.input-with-icon-wrapper>
                 </div>
 
-                <!-- Remember Me -->
+                <!-- Ingat Saya -->
                 <div class="flex items-center justify-between">
                     <label for="remember_me" class="inline-flex items-center">
                         <input
@@ -72,13 +72,13 @@
                         >
 
                         <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">
-                            {{ __('Remember me') }}
+                            {{ __('Ingat saya') }}
                         </span>
                     </label>
 
                     @if (Route::has('password.request'))
                         <a class="text-sm text-blue-500 hover:underline" href="{{ route('password.request') }}">
-                            {{ __('Forgot your password?') }}
+                            {{ __('Lupa kata sandi Anda?') }}
                         </a>
                     @endif
                 </div>
@@ -87,15 +87,15 @@
                     <x-button class="justify-center w-full gap-2">
                         <x-heroicon-o-login class="w-6 h-6" aria-hidden="true" />
 
-                        <span>{{ __('Log in') }}</span>
+                        <span>{{ __('Masuk') }}</span>
                     </x-button>
                 </div>
 
                 @if (Route::has('register'))
                     <p class="text-sm text-gray-600 dark:text-gray-400">
-                        {{ __('Don’t have an account?') }}
+                        {{ __('Belum punya akun?') }}
                         <a href="{{ route('register') }}" class="text-blue-500 hover:underline">
-                            {{ __('Register') }}
+                            {{ __('Daftar') }}
                         </a>
                     </p>
                 @endif

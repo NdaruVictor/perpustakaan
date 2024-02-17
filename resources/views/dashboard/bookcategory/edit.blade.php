@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <h2 class="text-xl font-semibold leading-tight">
-                {{ __('Edit Book Category') }}
+                {{ __('Edit Kategori Buku') }}
             </h2>
         </div>
     </x-slot>
@@ -15,7 +15,7 @@
                         @csrf
                         @method('PUT')
                         <div class="w-full my-1">
-                            <x-form.label for="title" :value="__('Title')" class="font-semibold text-lg" />
+                            <x-form.label for="title" :value="__('Judul')" class="font-semibold text-lg" />
                             <x-form.input type="text" placeholder="{{ $bookcategory->name}}" name="name" id="name" class="w-full" :value="old('name', $bookcategory ?? null)"/>
                             <div class="mt-2">
                                 @error('name')
@@ -24,7 +24,7 @@
                             </div>
                         </div>
                         <div class="w-full my-1">
-                            <x-form.label for="description" :value="__('Description')" class="font-semibold text-lg" />
+                            <x-form.label for="description" :value="__('Deskripsi')" class="font-semibold text-lg" />
                             <x-form.textarea name="description" id="description" placeholder="{{ $bookcategory->description}}" class="w-full" />
                             <div class="mt-2">
                                 @error('descripiton')
@@ -35,11 +35,11 @@
 
                         <div class="flex gap-2 mt-5">
                                 <x-primary-button>
-                                    Save Changes
+                                    Simpan Perubahan
                                 </x-primary-button>
                             <a href="{{ route('book-categories.index') }}">
                                 <x-danger-button type="button">
-                                    Back
+                                    Kembali
                                 </x-danger-button>
                             </a>
                         </div>

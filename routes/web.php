@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\BookUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,22 +16,37 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [\App\Http\Controllers\Landing\HomeController::class, 'index'])->name('landing');
+
+//penguna
+Route::middleware(['auth', 'role:pengguna'])->group(function () {
+    Route::resource('/loans', 'LoanController')->only('store');
+    Route::get('/loans/create/{id}', 'LoanController@create')->name('loan.create');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+//admin | petugas
+Route::middleware(['auth', 'role:admin|petugas'])->group(function () {
+    Route::put('/users/{id}/edit', [UserController::class, 'update'])->name('users.update');
+    Route::resource('/users', 'UserController');
+    Route::resource('/book', 'BookController');
+    Route::put('/loans/{id}/return', 'LoanController@returnBook')->name('loan.return');
+    Route::get('/loans-genarate/{id}', 'LoanController@generatePdf')->name('loan.generatePdf');
+    Route::resource('/book-categories', 'BookCategoryController');
+});
 
-Route::middleware('auth')->group(function () {
+Route::get('/books', 'Landing\BookController@index')->name('books.index');
+Route::get('/books/{id}', 'Landing\BookController@show')->name('books.show');
+Route::get('/keyword', 'Landing\BookController@keyword')->name('books.keyword');
+
+
+Route::get('/dashboard', [\App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth', 'role:admin|petugas'])->name('dashboard');
+
+// Rute untuk yang sudah login
+Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('/book', 'BookController');
-    Route::resource('/book-categories', 'BookCategoryController');
-    Route::resource('/loans', 'LoanController');
-    Route::put('/loans/{id}/return', 'LoanController@returnBook')->name('loan.return');
+    Route::resource('/loans', 'LoanController')->only('index');
 });
 
 require __DIR__ . '/auth.php';
