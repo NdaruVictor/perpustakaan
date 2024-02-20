@@ -55,5 +55,8 @@
             @empty
             @endforelse
         </div>
+        <div class="mt-8">
+            {{ $books->links() }}
+        </div>
     </div>
 </x-app-layout>

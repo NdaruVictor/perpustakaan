@@ -31,6 +31,7 @@ Route::middleware(['auth', 'role:admin|petugas'])->group(function () {
     Route::resource('/book', 'BookController');
     Route::put('/loans/{id}/return', 'LoanController@returnBook')->name('loan.return');
     Route::get('/loans-genarate/{id}', 'LoanController@generatePdf')->name('loan.generatePdf');
+    Route::get('/loans/generate-pdf-by-filter', 'LoanController@generatePdfByFilter')->name('loan.generatePdfByFilter');
     Route::resource('/book-categories', 'BookCategoryController');
 });
 

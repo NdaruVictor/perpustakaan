@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Book::class)->nullable()->constrained()->cascadeOnDelete();
             $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->integer('quantity')->default(1);
             $table->date('borrow_date');
             $table->date('return_date')->nullable();
             $table->decimal('fine_amount', 10, 2)->default(0);

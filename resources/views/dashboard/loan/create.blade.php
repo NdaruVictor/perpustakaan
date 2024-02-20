@@ -41,8 +41,14 @@
                             </x-form.select>
                         </div>
                         <div class="w-full my-1">
-                            <x-form.label class="font-semibold text-lg" value="Stock" for="book_id" />
-                           <x-form.input ></x-form.input>
+                            <x-form.label class="font-semibold text-lg" value="Jumlah Buku" for="Stock" />
+                            <x-form.file-input type="number" placeholder="Masukkan Jumlah Buku" name="quantity"
+                                id="quantity" class="w-full" min="1" />
+                            @if (session('error'))
+                                <div class="alert alert-danger">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
                         </div>
                         <div class="flex gap-2 mt-5">
                             <x-primary-button>

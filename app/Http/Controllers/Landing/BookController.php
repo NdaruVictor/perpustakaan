@@ -11,7 +11,7 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::query()->get();
+        $books = Book::paginate(8); 
         return view('landing.bookUser.index', compact('books'));
     }
 
